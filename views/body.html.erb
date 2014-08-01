@@ -3,23 +3,44 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <% if @edf %>
-      <h1><%= File.basename(@edf.filename) %></h1>
-      <p>
-        # of Signals: <%= @edf.signals.count %>
-      </p>
-    <% end %>
 
-    <canvas id="myCanvas" width="854" height="480" style="border:1px solid #000000;">
-    </canvas>
+    <title>Altamira</title>
 
-    <footer>Altamira v<%= Altamira::VERSION::STRING %></footer>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="<%= env["SCRIPT_NAME"] %>/assets/application.js"></script>
+
+    <style type="text/css">
+      body, input, button, select, textarea, .navbar-search .search-query {
+        font-family: 'Open Sans', sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <% if @edf %>
+        <h1><%= File.basename(@edf.filename) %></h1>
+        <p>
+          # of Signals: <%= @edf.signals.count %>
+        </p>
+        <% @edf.signals.each do |signal| %>
+          <div  data-object="signal-data"
+                data-array="<%= signal.physical_values[0..200*signal.samples_per_data_record].collect{|i| i.round(2)} %>"
+                data-label="<%= signal.label %>"
+                data-samples-per-data-record="<%= signal.samples_per_data_record %>"
+                data-physical-maximum="<%= signal.physical_maximum %>"
+                data-physical-minimum="<%= signal.physical_minimum %>"></div>
+        <% end %>
+      <% end %>
+
+      <canvas id="myCanvas" width="1854" height="<% if @edf %><%= @edf.signals.count * 260 %><% else %>960<% end %>"></canvas>
+
+      <footer>Altamira v<%= Altamira::VERSION::STRING %></footer>
+    </div>
   </body>
 </html>
