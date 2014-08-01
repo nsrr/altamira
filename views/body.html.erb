@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <% if @edf %>
+      <h1><%= File.basename(@edf.filename) %></h1>
+      <p>
+        # of Signals: <%= @edf.signals.count %>
+      </p>
+    <% end %>
+
+    <canvas id="myCanvas" width="854" height="480" style="border:1px solid #000000;">
+    </canvas>
+
+    <footer>Altamira v<%= Altamira::VERSION::STRING %></footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="<%= env["SCRIPT_NAME"] %>/assets/application.js"></script>
+  </body>
+</html>
