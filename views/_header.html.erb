@@ -13,8 +13,8 @@
       <ul class="nav navbar-nav">
         <li class="disabled"><a href="#"><%= File.basename(@edf.filename) if @edf %></a></li>
 
-        <li class="<%= 'disabled' if @page == 1 %>"><a href="?page=<%= [@page - 1, 1].max %>&window=<%= @samples_per_page %>" id="retreat">&larr; Retreat</a></li>
-        <li class="<%= 'disabled' if @page == @max_page %>"><a href="?page=<%= [@page + 1, @max_page].min %>&window=<%= @samples_per_page %>" id="advance">Advance &rarr;</a></li>
+        <li class="<%= 'disabled' if @page == 1 %>"><a href="?page=<%= [@page - 1, 1].max %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>" id="retreat">&larr; Retreat</a></li>
+        <li class="<%= 'disabled' if @page == @max_page %>"><a href="?page=<%= [@page + 1, @max_page].min %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>" id="advance">Advance &rarr;</a></li>
 
         <% left_window = @page * 100.0 / @max_page %>
         <% center_window = (100.0 / @max_page + 2.0).ceil %>
@@ -33,7 +33,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="disabled"><a href="#">Samples Per Page</a></li>
         <% [15,30,60].each do |window| %>
-          <li><a href="?page=<%= @page %>&window=<%= window %>" class="btn <%= 'active' if @samples_per_page == window %>"><%= window %></a></li>
+          <li><a href="?page=<%= @page %>&window=<%= window %>&signal=<%= @params["signal"] %>" class="btn <%= 'active' if @samples_per_page == window %>"><%= window %></a></li>
         <% end %>
       </ul>
 
