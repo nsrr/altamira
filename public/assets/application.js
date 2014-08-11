@@ -75,7 +75,7 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
   offset_line(0,y_axis_center,signal_canvas_width,y_axis_center,1,"#ededed",x_offset,y_offset);
 
   if ($(element).data('physical-minimum') != 0 && $(element).data('physical-maximum') != 0){
-    offset_label(-10,y_axis_center,"0",x_offset,y_offset,null,'middle');
+    offset_label(-10,y_axis_center,"0.0",x_offset,y_offset,null,'middle');
   }
 
 
