@@ -6,7 +6,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'altamira'
 
-edf_names = Dir.glob('tmp/*.edf')
+edf_names = Dir.glob('tmp/*.edf').sort
 @edf = Edfize::Edf.new(edf_names.first) if edf_names.size > 0
 @edf.load_signals if @edf
 
