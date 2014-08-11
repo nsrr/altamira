@@ -1,4 +1,6 @@
 <% if @edf %>
+  <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 260) %>
+  <% @signal_padding = 20 %>
   <% @edf.signals.each do |signal| %>
     <% @window_start = @samples_per_page*signal.samples_per_data_record * (@page - 1) %>
     <% @window_end = @window_start + @samples_per_page*signal.samples_per_data_record %>
@@ -9,16 +11,16 @@
           data-physical-maximum="<%= signal.physical_maximum %>"
           data-physical-minimum="<%= signal.physical_minimum %>"></div>
   <% end %>
-<% end %>
 
-<canvas id="myCanvas" width="1200" height="<% if @edf %><%= @edf.signals.count * 260 %><% else %>960<% end %>" data-samples-per-page="<%= @samples_per_page %>"></canvas> <%# width="1854" %>
+  <canvas id="myCanvas" width="1200" height="<%= @signal_padding + @edf.signals.count * (@signal_height + @signal_padding) %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
 
+  <p>
+    # of Signals: <%= @edf.signals.count %><br />
+    # of Data Records: <%= @edf.number_of_data_records %><br />
+    Duration of a Data Record: <%= @edf.duration_of_a_data_record %> second<%= 's' if @edf.duration_of_a_data_record != 1 %><br />
+    Last Page: <%= @max_page %>
+  </p>
 
-<% if @edf %>
-<p>
-  # of Signals: <%= @edf.signals.count %><br />
-  # of Data Records: <%= @edf.number_of_data_records %><br />
-  Duration of a Data Record: <%= @edf.duration_of_a_data_record %> second<%= 's' if @edf.duration_of_a_data_record != 1 %><br />
-  Last Page: <%= @max_page %>
-</p>
+<% else %>
+  <canvas id="myCanvas" width="1200" height="960" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="1"></canvas>
 <% end %>

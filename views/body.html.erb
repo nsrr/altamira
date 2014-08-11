@@ -31,7 +31,6 @@
     <% @default_window_size = (@params["window"].to_i > 1 ? @params["window"].to_i : 30) %>
     <% @samples_per_page = @default_window_size %>
 
-
     <% if @edf %>
       <% @samples_per_page = @default_window_size / @edf.duration_of_a_data_record %> <%# 30 second per page / 1 second per sample = 30 samples per page %><br />
 
