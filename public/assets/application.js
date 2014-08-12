@@ -102,18 +102,15 @@ function ready () {
   });
 }
 
-$(document).ready(function() {
+$(document).ready(ready);
+$(document).on("page:load", function() {
   ready();
+  window.scrollTo(window.$prevPageXOffset, window.$prevPageYOffset);
 });
-$(document).on('page:load', ready)
 $(document).on("page:change", function() {
   window.$prevPageYOffset = window.pageYOffset;
   window.$prevPageXOffset = window.pageXOffset;
 });
-$(document).on("page:load", function() {
-  window.scrollTo(window.$prevPageXOffset, window.$prevPageYOffset);
-});
-
 
 $(document).keydown( function(e) {
   if(e.which == 37 && !$("input, textarea, select, a").is(":focus")){
