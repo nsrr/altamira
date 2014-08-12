@@ -24,7 +24,7 @@
           <a href="#" data-toggle="dropdown"><%= @samples_per_page %> Second Window <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <% [15,30,60].each do |window| %>
-              <li class="<%= 'active' if @samples_per_page == window %>"><a href="?page=<%= ((@page - 1) * @samples_per_page / window) + 1 %>&window=<%= window %>&signal=<%= @params["signal"] %>&name=<%= @params["name"] %>"><%= window %> Page: <%= ((@page - 1) * @samples_per_page / window) + 1 %></a></li>
+              <li class="<%= 'active' if @samples_per_page == window %>"><a href="?page=<%= ((@page - 1) * @samples_per_page / window) + 1 %>&window=<%= window %>&signal=<%= @params["signal"] %>&name=<%= @params["name"] %>"><%= window %></a></li>
             <% end %>
           </ul>
         </li>
