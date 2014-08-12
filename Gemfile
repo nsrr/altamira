@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rack',   '~> 1.5.2'
 gem 'rake',   '~> 10.3.2'
-gem 'edfize', '~> 0.1.0'
+gem 'edfize', '~> 0.2.0.beta1'
 
 
 # Testing

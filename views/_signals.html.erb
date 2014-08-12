@@ -1,11 +1,11 @@
 <% if @edf %>
-  <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 260) %>
+  <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 50) %>
   <% @signal_padding = 20 %>
   <% @edf.signals.each do |signal| %>
-    <% @window_start = @samples_per_page*signal.samples_per_data_record * (@page - 1) %>
-    <% @window_end = @window_start + @samples_per_page*signal.samples_per_data_record %>
+    <%# @window_start = @samples_per_page*signal.samples_per_data_record * (@page - 1) %>
+    <%# @window_end = @window_start + @samples_per_page*signal.samples_per_data_record %>
     <div  data-object="signal-data"
-          data-array="<%= (signal.physical_values[@window_start..@window_end] || []).collect{|i| i.round(2)} %>"
+          data-array="<%= (signal.physical_values || []).collect{|i| i.to_f.round(2)} %><%#= (signal.physical_values[@window_start..@window_end] || []).collect{|i| i.round(2)} %>"
           data-label="<%= signal.label %>"
           data-samples-per-data-record="<%= signal.samples_per_data_record %>"
           data-physical-maximum="<%= signal.physical_maximum %>"
