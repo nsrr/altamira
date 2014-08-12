@@ -3,10 +3,10 @@ function point(x,y,width,color) {
     width = 2;
   }
   if (color == null) {
-    color = "#333333";
+    color = "#ADFF2F";
   }
   window.$ctx.fillStyle=color;
-  window.$ctx.fillRect(x,window.$canvas.height-y,x+width,window.$canvas.height-y+width);
+  window.$ctx.fillRect(x,y,width,width);
 }
 
 function line(x,y,x2,y2,width,color) {
@@ -118,6 +118,14 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
   }
 }
 
+function getMousePos(evt) {
+  var rect = window.$canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
+
 function ready () {
   window.$canvas = $("#myCanvas")[0];
   window.$ctx = window.$canvas.getContext("2d");
@@ -130,6 +138,11 @@ function ready () {
     drawSignal($(this).data('array'),100,window.$canvas.height-(window.$signal_padding + (window.$signal_height / 2) + index*(window.$signal_height+window.$signal_padding)),$(this).data('label'),parseInt($(this).data('samples-per-data-record')),$(this));
     $(this).removeAttr('data-array');
   });
+
+  // window.$canvas.addEventListener('mouseup', function(evt) {
+  //   var mousePos = getMousePos(evt);
+  //   point(mousePos.x, mousePos.y);
+  // }, false);
 }
 
 $(document).ready(ready);
