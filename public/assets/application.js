@@ -109,9 +109,11 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
       y_start = scaleAndOffset(array[i], element);
       y_end = scaleAndOffset(array[i+1], element);
 
-      // y_zero = scaleAndOffset(0, element);
-      // y_max = scaleAndOffset($(element).data('physical-maximum'), element);
-      // offset_box(i*magnitude_x, y_start,(i+1)*magnitude_x, y_end,x_offset,y_offset,y_zero,y_max);
+      if ($("#color").val() == '1') {
+        y_zero = scaleAndOffset(0, element);
+        y_max = scaleAndOffset($(element).data('physical-maximum'), element);
+        offset_box(i*magnitude_x, y_start,(i+1)*magnitude_x, y_end,x_offset,y_offset,y_zero,y_max);
+      }
 
       offset_line(i*magnitude_x, y_start,(i+1)*magnitude_x, y_end,1,null,x_offset,y_offset);
     }
