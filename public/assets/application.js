@@ -1,3 +1,10 @@
+/* Function from http://stackoverflow.com/a/10073788/1611947 */
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 function point(x,y,width,color) {
   if (width == null) {
     width = 2;
@@ -75,6 +82,25 @@ function scaleAndOffset(y_value, element) {
   return (y_value - $(element).data('physical-minimum')) * (window.$signal_height / (distance)) - (window.$signal_height / 2);
 }
 
+function drawGrid(element, x_offset, y_offset) {
+  y_axis_top = scaleAndOffset($(element).data('physical-maximum'), element);
+  y_axis_bottom = scaleAndOffset($(element).data('physical-minimum'), element);
+  signal_canvas_width = window.$canvas.width - x_offset;
+  starting_number =  ($("#epoch_number").val() - 1) * 5;
+  ending_number = starting_number + 5; // $("#epoch_window").val()
+
+  for (var i=starting_number, l=ending_number+1; i < l; i+=1) {
+    spacing = signal_canvas_width / (ending_number-starting_number);
+    total_seconds = i * $("#epoch_window").val() / (ending_number-starting_number);
+    hours = Math.floor(total_seconds / 3600);
+    minutes = Math.floor((total_seconds - (hours * 3600)) / 60);
+    seconds = total_seconds - (hours * 3600) - (minutes * 60);
+    time_label = pad(hours,2) + ":" + pad(minutes,2) + ":" + pad(Math.round(seconds * 100) / 100,2);
+    offset_label((i-starting_number)*spacing,y_axis_top,time_label,x_offset,y_offset,(i == starting_number ? 'left' : (i == ending_number ? 'right' : 'center')),'bottom','#777');
+    offset_line((i-starting_number)*spacing,y_axis_top,(i-starting_number)*spacing,y_axis_bottom,1,"#ededed",x_offset,y_offset);
+  }
+}
+
 function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,element) {
   if (y_offset == null) {
     y_offset = 150;
@@ -103,6 +129,9 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
     offset_label(-10,y_axis_center,"0.0",x_offset,y_offset,null,'middle','#ededed');
   }
 
+  if ($("#grid").val() != '0') {
+    drawGrid(element, x_offset, y_offset);
+  }
 
   for (var i=0, l=array.length; i < l; i+=1) {
     if ( i < l - 1 ) {

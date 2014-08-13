@@ -35,7 +35,13 @@
     <% @default_window_size = (@params["window"].to_i > 0 ? @params["window"].to_i : 30) %>
     <% @samples_per_page = @default_window_size %>
 
+    <% @epoch_number = @page %>
+    <% @epoch_window = @default_window_size %>
+
+    <input type="hidden" id="epoch_number" name="epoch_number" value="<%= @epoch_number %>">
+    <input type="hidden" id="epoch_window" name="epoch_window" value="<%= @epoch_window %>">
     <input type="hidden" id="color" name="color" value="<%= @params["color"] %>">
+    <input type="hidden" id="grid" name="grid" value="<%= @params["grid"] %>">
 
     <% if @edf %>
       <% @samples_per_page = @default_window_size / @edf.duration_of_a_data_record %> <%# 30 second per page / 1 second per sample = 30 samples per page %><br />
