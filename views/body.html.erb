@@ -38,16 +38,16 @@
     <% if @edf %>
       <% @samples_per_page = @default_window_size / @edf.duration_of_a_data_record %> <%# 30 second per page / 1 second per sample = 30 samples per page %><br />
 
-      <% @max_page = (@edf.number_of_data_records * 1.0 / @samples_per_page).ceil %>
+      <% @max_page = [(@edf.number_of_data_records * 1.0 / @samples_per_page).ceil, 1].max %>
       <% @page = [@page, @max_page].min %>
 
       <% @edf.load_epoch(@page-1,@samples_per_page) if @edf %>
     <% end %>
 
     <%= ERB.new(IO.read('views/_header.html.erb'), nil, nil, '_erbout2').result(binding) %>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
       <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout3').result(binding) %>
-      <footer>Altamira v<%= Altamira::VERSION::STRING %></footer>
+      <footer class="text-muted" style="text-align:center">Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a></footer>
     </div>
   </body>
 </html>

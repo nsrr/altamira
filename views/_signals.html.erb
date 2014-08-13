@@ -12,13 +12,44 @@
 
   <canvas id="myCanvas" width="1200" height="<%= @signal_padding + @edf.signals.count * (@signal_height + @signal_padding) %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
 
-  <p>
-    # of Signals: <%= @edf.signals.count %><br />
-    # of Data Records: <%= @edf.number_of_data_records %><br />
-    Duration of a Data Record: <%= @edf.duration_of_a_data_record %> second<%= 's' if @edf.duration_of_a_data_record != 1 %><br />
-    Last Page: <%= @max_page %>
-  </p>
-
 <% else %>
   <canvas id="myCanvas" width="1200" height="960" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="1"></canvas>
+<% end %>
+
+<% if @edf %>
+  <table class="table table-striped"><col width="250px"/>
+    <tr><th colspan="2">General</th></tr>
+    <tr><td>First Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>&page=1">1</a></td></tr>
+    <tr><td>Current Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>&page=<%= @page %>"><%= @page %></a></td></tr>
+    <tr><td>Last Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>&page=<%= @max_page %>"><%= @max_page %></a></td></tr>
+    <th colspan="2">EDF Header</th>
+    <tr><td>Version</td><td><%= @edf.version %></td></tr>
+    <% if false %>
+      <tr><td>Local Patient Identification</td><td><%= @edf.local_patient_identification %></td></tr>
+      <tr><td>Local Recording Identification</td><td><%= @edf.local_recording_identification %></td></tr>
+    <% end %>
+    <tr><td>Start Date of Recording</td><td><%= @edf.start_date_of_recording %> (dd.mm.yy)</td></tr>
+    <tr><td>Start Time of Recording</td><td><%= @edf.start_time_of_recording %> (hh.mm.ss)</td></tr>
+    <tr><td>Number of Bytes in Header</td><td><%= @edf.number_of_bytes_in_header %></td></tr>
+    <% if false %>
+    <tr><td>Reserved</td><td><%= @edf.reserved %></td></tr>
+    <% end %>
+    <tr><td>Number of Data Records</td><td><%= @edf.number_of_data_records %></td></tr>
+    <tr><td>Duration of a Data Record</td><td><%= @edf.duration_of_a_data_record %> second<%= 's' if @edf.duration_of_a_data_record != 1 %></td></tr>
+    <tr><th colspan="2">Signal Header</th></tr>
+    <tr><td>Number of Signals</td><td><%= @edf.signals.count %></td></tr>
+    <% @edf.signals.each do |signal| %>
+      <tr><th colspan="2"><%= signal.label %></th></tr>
+      <tr><td>Transducer Type</td><td><%= signal.transducer_type %></td></tr>
+      <tr><td>Physical Dimension</td><td><%= signal.physical_dimension %></td></tr>
+      <tr><td>Physical Minimum</td><td><%= signal.physical_minimum %></td></tr>
+      <tr><td>Physical Maximum</td><td><%= signal.physical_maximum %></td></tr>
+      <tr><td>Digital Minimum</td><td><%= signal.digital_minimum %></td></tr>
+      <tr><td>Digital Maximum</td><td><%= signal.digital_maximum %></td></tr>
+      <tr><td>Prefiltering</td><td><%= signal.prefiltering %></td></tr>
+      <tr><td>Samples Per Data Record</td><td><%= signal.samples_per_data_record %></td></tr>
+      <% if false %><tr><td>Reserved Area</td><td><%= signal.reserved_area %></td></tr><% end %>
+
+    <% end %>
+  </table>
 <% end %>

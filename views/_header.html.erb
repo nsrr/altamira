@@ -15,7 +15,7 @@
           <a href="#" data-toggle="dropdown"><%= File.basename(@edf.filename) if @edf %> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <% @edf_names.each do |edf_name| %>
-              <li class="<%= 'active' if edf_name == @edf_name %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= File.basename(edf_name) %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>&page=<%= [@page - 1, 1].max %>"><%= File.basename(edf_name) %></a></li>
+              <li class="<%= 'active' if edf_name == @edf_name %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= File.basename(edf_name) %>&window=<%= @samples_per_page %>&signal=<%= @params["signal"] %>&page=<%= @page %>"><%= File.basename(edf_name) %></a></li>
             <% end %>
           </ul>
         </li>
