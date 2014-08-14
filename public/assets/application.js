@@ -155,8 +155,16 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
   var y_axis_center = scaleAndOffset(0, element);
   var y_axis_bottom = scaleAndOffset(graph.min, element);
 
-  offset_label(-10,y_axis_top,graph.max,x_offset,y_offset,null,'middle',null);
-  offset_label(-10,y_axis_bottom,graph.min,x_offset,y_offset,null,'middle',null);
+  top_label = graph.max;
+  bottom_label = graph.min;
+
+  if ($(element).data("physical-dimension")) {
+    top_label = top_label + " " + $(element).data("physical-dimension");
+    bottom_label = bottom_label + " " + $(element).data("physical-dimension");
+  }
+
+  offset_label(-10,y_axis_top,top_label,x_offset,y_offset,null,'middle',"#777");
+  offset_label(-10,y_axis_bottom,bottom_label,x_offset,y_offset,null,'middle',"#777");
 
   offset_line(0,y_axis_center,signal_canvas_width,y_axis_center,1,"#ededed",x_offset,y_offset);
 
