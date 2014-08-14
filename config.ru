@@ -22,4 +22,17 @@ app = proc do |env|
     end
   end
 end
-run app
+
+require 'sprockets'
+
+map '/assets' do
+  environment = Sprockets::Environment.new
+  environment.append_path 'app/assets/javascripts'
+  environment.append_path "#{Gem::Specification.find_by_name('turbolinks').lib_dirs_glob}/assets/javascripts"
+  # environment.append_path 'app/assets/stylesheets'
+  run environment
+end
+
+map '/' do
+  run app
+end
