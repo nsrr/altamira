@@ -95,7 +95,7 @@ function getGraphMinMax(element) {
   var graph_maximum;
   var graph_minimum;
 
-  if ($(element).data('auto-scale') == '1') {
+  if ($(element).data('auto-scale') == '1' && $(element).data('minimum-value') != $(element).data('maximum-value')) {
     graph_minimum = $(element).data('minimum-value');
     graph_maximum = $(element).data('maximum-value');
   } else {
