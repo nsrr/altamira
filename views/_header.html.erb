@@ -15,7 +15,7 @@
           <a href="#" data-toggle="dropdown"><%= File.basename(@edf.filename) if @edf %> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <% @edf_names.each do |edf_name| %>
-              <li class="<%= 'active' if edf_name == @edf_name %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= File.basename(edf_name) %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= File.basename(edf_name) %></a></li>
+              <li class="<%= 'active' if edf_name == @edf_name %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= File.basename(edf_name) %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= File.basename(edf_name) %></a></li>
             <% end %>
           </ul>
         </li>
@@ -23,14 +23,14 @@
         <li class="dropdown">
           <a href="#" data-toggle="dropdown"><%= @samples_per_page %> Second Window <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <% [15,30,60].each do |window| %>
-              <li class="<%= 'active' if @samples_per_page == window %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= window %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= ((@page - 1) * @samples_per_page / window) + 1 %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= window %></a></li>
+            <% [5,15,30,60].each do |window| %>
+              <li class="<%= 'active' if @samples_per_page == window %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{window}" if window != 30 %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= ((@page - 1) * @samples_per_page / window) + 1 %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= window %></a></li>
             <% end %>
           </ul>
         </li>
 
-        <li class="<%= 'disabled' if @page == 1 %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page - 1, 1].max %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="retreat">&larr; Retreat</a></li>
-        <li class="<%= 'disabled' if @page == @max_page %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page + 1, @max_page].min %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="advance">Advance &rarr;</a></li>
+        <li class="<%= 'disabled' if @page == 1 %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page - 1, 1].max %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="retreat">&larr; Retreat</a></li>
+        <li class="<%= 'disabled' if @page == @max_page %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page + 1, @max_page].min %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="advance">Advance &rarr;</a></li>
 
         <% left_window = (@page-1) * 100.0 / @max_page %>
         <% center_window = (100.0 / @max_page + 2.0).ceil %>

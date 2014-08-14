@@ -58,9 +58,9 @@
 <% if @edf and false %>
   <table class="table table-striped"><col width="250px"/>
     <tr><th colspan="2">General</th></tr>
-    <tr><td>First Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=1<%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>">1</a></td></tr>
-    <tr><td>Current Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @page %></a></td></tr>
-    <tr><td>Last Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %>&window=<%= @samples_per_page %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @max_page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @max_page %></a></td></tr>
+    <tr><td>First Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=1<%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>">1</a></td></tr>
+    <tr><td>Current Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @page %></a></td></tr>
+    <tr><td>Last Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @max_page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @max_page %></a></td></tr>
     <th colspan="2">EDF Header</th>
     <tr><td>Version</td><td><%= @edf.version %></td></tr>
     <% if false %>
