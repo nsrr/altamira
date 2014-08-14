@@ -13,6 +13,10 @@
 
   start = new Date().getTime()
 
+  if $("[data-object='hypnogram-data']").length > 0
+    setupHypnogram()
+    drawHypnogram()
+
   $("[data-object='signal-data']").each( (index) ->
     drawSignal($(this).data('array'),100,window.$canvas.height-(window.$signal_padding + (window.$signal_height / 2) + index*(window.$signal_height+window.$signal_padding)),$(this).data('label'),parseInt($(this).data('samples-per-data-record')),$(this))
     $(this).removeAttr('data-array')

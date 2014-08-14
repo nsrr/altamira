@@ -1,9 +1,7 @@
 <% if @edf %>
-  <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 50) %>
-  <% @signal_padding = 20 %>
-
   <% @signal_count = @edf.signals.count %>
 
+  <% if false %>
   <% @staging_file = @edf_name.gsub(/\.edf$/, '-staging.csv') %>
   <% if File.exist?(@staging_file) %>
     <% stages = [] %>
@@ -23,6 +21,7 @@
         data-physical-minimum="<%= stages.min %>"
         data-grid="0"></div>
     <% @signal_count += 1 %>
+  <% end %>
   <% end %>
 
   <% @edf.signals.each_with_index do |signal, signal_index| %>

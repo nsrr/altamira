@@ -31,7 +31,7 @@
 
     <% @page = (@params["page"].to_i > 1 ? @params["page"].to_i : 1 ) %>
     <%# Default Window Size should equal 30 second increments %>
-    <% @default_window_size = (@params["window"].to_i > 0 ? @params["window"].to_i : 30) %>
+    <% @default_window_size = (@params["window"].to_i > 0 && @params["window"].to_i <= 60 ? @params["window"].to_i : 30) %>
     <% @samples_per_page = @default_window_size %>
 
     <% @epoch_number = @page %>
@@ -55,7 +55,10 @@
 
     <%= ERB.new(IO.read('views/_header.html.erb'), nil, nil, '_erbout2').result(binding) %>
     <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
-      <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout3').result(binding) %>
+      <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 50) %>
+      <% @signal_padding = 20 %>
+      <%= ERB.new(IO.read('views/_hypnogram.html.erb'), nil, nil, '_erbout3').result(binding) %>
+      <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout4').result(binding) %>
       <footer class="text-muted" style="text-align:center">
         Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
         &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms &middot; <span id="drawing_time"></span>

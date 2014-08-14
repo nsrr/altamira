@@ -31,7 +31,9 @@
 
         <li class="<%= 'disabled' if @page == 1 %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page - 1, 1].max %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="retreat">&larr; Retreat</a></li>
         <li class="<%= 'disabled' if @page == @max_page %>"><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= [@page + 1, @max_page].min %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>" id="advance">Advance &rarr;</a></li>
+        <a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>&page=<%= @page %>" id="hypnogram-link" style="display:none"></a>
 
+        <% if false %>
         <% left_window = (@page-1) * 100.0 / @max_page %>
         <% center_window = (100.0 / @max_page + 2.0).ceil %>
         <% right_window = 100.0 - left_window - center_window %>
@@ -44,6 +46,7 @@
           <div class="progress-bar" style="width: <%= right_window %>%;background-color:#777;">
           </div>
         </div>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
