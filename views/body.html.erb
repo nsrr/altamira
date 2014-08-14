@@ -42,7 +42,9 @@
     <input type="hidden" id="epoch_window" name="epoch_window" value="<%= @epoch_window %>">
     <input type="hidden" id="color" name="color" value="<%= @params["color"] %>">
     <input type="hidden" id="grid" name="grid" value="<%= @params["grid"] %>">
+    <input type="hidden" id="fast" name="fast" value="<%= @params["fast"] %>">
 
+    <% @start_time = Time.now %>
     <% if @edf %>
       <% @samples_per_page = @default_window_size / @edf.duration_of_a_data_record %> <%# 30 second per page / 1 second per sample = 30 samples per page %><br />
 
@@ -55,7 +57,10 @@
     <%= ERB.new(IO.read('views/_header.html.erb'), nil, nil, '_erbout2').result(binding) %>
     <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
       <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout3').result(binding) %>
-      <footer class="text-muted" style="text-align:center">Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a></footer>
+      <footer class="text-muted" style="text-align:center">
+        Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
+        &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms &middot; <span id="drawing_time"></span>
+      </footer>
     </div>
   </body>
 </html>

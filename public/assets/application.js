@@ -16,24 +16,38 @@ function point(x,y,width,color) {
   window.$ctx.fillRect(x,y,width,width);
 }
 
-function line(x,y,x2,y2,width,color) {
-  // console.log("(" + x + ", " + y + ") to (" + x2 + ", " + y2 + ")");
-  if (color == null) {
-    color = "#333333";
+function line(x,y,x2,y2,width,color,path_only) {
+  // // Round floating point values
+  // if ($("#fast").val() == '1') {
+  //   x = (0.5 + x) | 0;
+  //   y = (0.5 + y) | 0;
+  //   x2 = (0.5 + x2) | 0;
+  //   y2 = (0.5 + y2) | 0;
+  // }
+
+  if (path_only == null) {
+    path_only = false;
   }
-  window.$ctx.strokeStyle=color;
-  window.$ctx.beginPath();
+
+  if (!path_only) {
+    if (color == null) {
+     color = "#333333";
+    }
+    window.$ctx.strokeStyle=color;
+    window.$ctx.beginPath();
+    window.$ctx.lineWidth = width;
+  }
+
   window.$ctx.moveTo(x, window.$canvas.height-y);
   window.$ctx.lineTo(x2, (window.$canvas.height-y2));
-  window.$ctx.lineWidth = width;
-  window.$ctx.stroke();
+
+  if (!path_only) {
+    window.$ctx.stroke();
+  }
 }
 
-function offset_line(x,y,x2,y2,width,color,x_offset,y_offset) {
-  if (color == null) {
-    color = "#333333";
-  }
-  line(x+x_offset,y+y_offset,x2+x_offset,y2+y_offset,width,color)
+function offset_line(x,y,x2,y2,width,color,x_offset,y_offset,path_only) {
+  line(x+x_offset,y+y_offset,x2+x_offset,y2+y_offset,width,color,path_only)
 }
 
 function box(x,y,x2,y2,y_zero,y_max) {
@@ -77,14 +91,31 @@ function offset_label(x,y,text,x_offset,y_offset,align,baseline,color) {
   line_label(x+x_offset,y+y_offset,text,align,baseline,color);
 }
 
+function getGraphMinMax(element) {
+  var graph_maximum;
+  var graph_minimum;
+
+  if ($(element).data('auto-scale') == '1') {
+    graph_minimum = $(element).data('minimum-value');
+    graph_maximum = $(element).data('maximum-value');
+  } else {
+    graph_minimum = $(element).data('physical-minimum');
+    graph_maximum = $(element).data('physical-maximum');
+  }
+  return { min: graph_minimum, max: graph_maximum };
+}
+
 function scaleAndOffset(y_value, element) {
-  var distance = $(element).data('physical-maximum') - $(element).data('physical-minimum');
-  return (y_value - $(element).data('physical-minimum')) * (window.$signal_height / (distance)) - (window.$signal_height / 2);
+  var graph = getGraphMinMax(element);
+  var distance = graph.max - graph.min;
+  return (y_value - graph.min) * (window.$signal_height / (distance)) - (window.$signal_height / 2);
 }
 
 function drawGrid(element, x_offset, y_offset) {
-  y_axis_top = scaleAndOffset($(element).data('physical-maximum'), element);
-  y_axis_bottom = scaleAndOffset($(element).data('physical-minimum'), element);
+  var graph = getGraphMinMax(element);
+
+  y_axis_top = scaleAndOffset(graph.max, element);
+  y_axis_bottom = scaleAndOffset(graph.min, element);
   signal_canvas_width = window.$canvas.width - x_offset;
   starting_number =  ($("#epoch_number").val() - 1) * 5;
   ending_number = starting_number + 5; // $("#epoch_window").val()
@@ -96,7 +127,9 @@ function drawGrid(element, x_offset, y_offset) {
     minutes = Math.floor((total_seconds - (hours * 3600)) / 60);
     seconds = total_seconds - (hours * 3600) - (minutes * 60);
     time_label = pad(hours,2) + ":" + pad(minutes,2) + ":" + pad(Math.round(seconds * 100) / 100,2);
-    offset_label((i-starting_number)*spacing,y_axis_top,time_label,x_offset,y_offset,(i == starting_number ? 'left' : (i == ending_number ? 'right' : 'center')),'bottom','#777');
+    if ($(element).data('grid') == '2') {
+      offset_label((i-starting_number)*spacing,y_axis_top,time_label,x_offset,y_offset,(i == starting_number ? 'left' : (i == ending_number ? 'right' : 'center')),'bottom','#777');
+    }
     offset_line((i-starting_number)*spacing,y_axis_top,(i-starting_number)*spacing,y_axis_bottom,1,"#ededed",x_offset,y_offset);
   }
 }
@@ -116,37 +149,42 @@ function drawSignal(array,x_offset,y_offset,label,samples_per_data_record,elemen
 
   var magnitude_x = zoom_level*1/samples_per_data_record;
 
-  var y_axis_top = scaleAndOffset($(element).data('physical-maximum'), element);
-  var y_axis_center = scaleAndOffset(0, element);
-  var y_axis_bottom = scaleAndOffset($(element).data('physical-minimum'), element);
+  var graph = getGraphMinMax(element);
 
-  offset_label(-10,y_axis_top,$(element).data('physical-maximum'),x_offset,y_offset,null,'middle',null);
-  offset_label(-10,y_axis_bottom,$(element).data('physical-minimum'),x_offset,y_offset,null,'middle',null);
+  var y_axis_top = scaleAndOffset(graph.max, element);
+  var y_axis_center = scaleAndOffset(0, element);
+  var y_axis_bottom = scaleAndOffset(graph.min, element);
+
+  offset_label(-10,y_axis_top,graph.max,x_offset,y_offset,null,'middle',null);
+  offset_label(-10,y_axis_bottom,graph.min,x_offset,y_offset,null,'middle',null);
 
   offset_line(0,y_axis_center,signal_canvas_width,y_axis_center,1,"#ededed",x_offset,y_offset);
 
-  if ($(element).data('physical-minimum') != 0 && $(element).data('physical-maximum') != 0){
+  if (graph.min != 0 && graph.max != 0){
     offset_label(-10,y_axis_center,"0.0",x_offset,y_offset,null,'middle','#ededed');
   }
 
-  if ($("#grid").val() != '0') {
+  if ($("#grid").val() != '0' && $(element).data('grid') != '0') {
     drawGrid(element, x_offset, y_offset);
   }
 
-  for (var i=0, l=array.length; i < l; i+=1) {
-    if ( i < l - 1 ) {
-      y_start = scaleAndOffset(array[i], element);
-      y_end = scaleAndOffset(array[i+1], element);
-
-      if ($("#color").val() == '1') {
-        y_zero = scaleAndOffset(0, element);
-        y_max = scaleAndOffset($(element).data('physical-maximum'), element);
-        offset_box(i*magnitude_x, y_start,(i+1)*magnitude_x, y_end,x_offset,y_offset,y_zero,y_max);
-      }
-
-      offset_line(i*magnitude_x, y_start,(i+1)*magnitude_x, y_end,1,null,x_offset,y_offset);
+  if ($("#color").val() == '1') {
+    y_zero = scaleAndOffset(0, element);
+    y_max = scaleAndOffset(graph.max, element);
+    for (var i=0, l=array.length; i < l-1; i+=1) {
+      offset_box(i*magnitude_x, scaleAndOffset(array[i], element),(i+1)*magnitude_x, scaleAndOffset(array[i+1], element),x_offset,y_offset,y_zero,y_max);
     }
   }
+
+  width = 1;
+  color = "#333333";
+  window.$ctx.strokeStyle = color;
+  window.$ctx.lineWidth = width;
+  window.$ctx.beginPath();
+  for (var i=0, l=array.length; i < l-1; i+=1) {
+    offset_line(i*magnitude_x, scaleAndOffset(array[i], element),(i+1)*magnitude_x, scaleAndOffset(array[i+1], element),width,color,x_offset,y_offset,true);
+  }
+  window.$ctx.stroke();
 }
 
 function getMousePos(evt) {
@@ -163,12 +201,17 @@ function ready () {
   window.$signal_height = $("#myCanvas").data('signal-height');
   window.$signal_padding = $("#myCanvas").data('signal-padding');
 
-  // line(window.$canvas.width, 0, window.$canvas.width, window.$canvas.height, 2, '#FF0000');
+  var start = new Date().getTime();
 
   $("[data-object='signal-data']").each(function(index){
     drawSignal($(this).data('array'),100,window.$canvas.height-(window.$signal_padding + (window.$signal_height / 2) + index*(window.$signal_height+window.$signal_padding)),$(this).data('label'),parseInt($(this).data('samples-per-data-record')),$(this));
     $(this).removeAttr('data-array');
   });
+
+  var end = new Date().getTime();
+  var time = end - start;
+  $("#drawing_time").html('Browser: ' + time + ' ms')
+
 
   // window.$canvas.addEventListener('mouseup', function(evt) {
   //   var mousePos = getMousePos(evt);
