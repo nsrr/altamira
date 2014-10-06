@@ -12,3 +12,4 @@
 - **Gem Changes**
   - Updated to edfize 0.2.0.beta1
     - edfize 0.2.0 provides the ability to load individual epochs from an EDF
+- Use of Ruby 2.1.3 is now recommended
