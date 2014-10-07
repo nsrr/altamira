@@ -24,10 +24,11 @@ app = proc do |env|
 
     @page = (params["page"].to_i > 1 ? params["page"].to_i : 1 )
     # Default Window Size should equal 30 second increments
-    @default_window_size = (params["window"].to_i > 0 && params["window"].to_i <= 60 ? params["window"].to_i : 30)
-    @samples_per_page = @default_window_size
+    @window = (params["window"].to_i > 0 && params["window"].to_i <= 60 ? params["window"].to_i : 30) # @window is in seconds
+    @data_records_per_window = 1
+
     @epoch_number = @page
-    @epoch_window = @default_window_size
+    @epoch_window = @window
     @edf_name = ""
     @edf = nil
 
@@ -39,11 +40,13 @@ app = proc do |env|
     @max_page = 1
 
     if @edf
-      @samples_per_page = @default_window_size / @edf.duration_of_a_data_record # 30 second per page / 1 second per sample = 30 samples per page
-      @max_page = [(@edf.number_of_data_records * 1.0 / @samples_per_page).ceil, 1].max
+      @data_records_per_window = (@window.to_f / @edf.duration_of_a_data_record).ceil # 30 second per window / 1 second per sample = 30 samples per window
+      @max_page = [(@edf.number_of_data_records.to_f * @edf.duration_of_a_data_record / @window).ceil, 1].max
       @page = [@page, @max_page].min
-      @edf.load_epoch(@page-1,@samples_per_page)
+      @edf.load_epoch(@page-1,@window)
     end
+
+    @samples_per_page = @data_records_per_window
 
     @signal_height = (params['signal'].to_i >= 1 ? params['signal'].to_i : 50)
     @signal_padding = 20
