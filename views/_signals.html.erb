@@ -1,29 +1,6 @@
 <% if @edf %>
   <% @signal_count = @edf.signals.count %>
 
-  <% if false %>
-  <% @staging_file = @edf_name.gsub(/\.edf$/, '-staging.csv') %>
-  <% if File.exist?(@staging_file) %>
-    <% stages = [] %>
-    <% File.open(@staging_file, "r") do |f| %>
-      <% index = -1 %>
-      <% f.each_line do |line| %>
-        <% index += 1 %>
-        <% next if index == 0 %>
-        <% stages << line.split(',')[1].to_i %>
-      <% end %>
-    <% end %>
-    <div data-object="signal-data"
-        data-array="<%= stages %>"
-        data-label="Sleep Stages"
-        data-samples-per-data-record="<%= stages.size / @samples_per_page %>"
-        data-physical-maximum="<%= stages.max %>"
-        data-physical-minimum="<%= stages.min %>"
-        data-grid="0"></div>
-    <% @signal_count += 1 %>
-  <% end %>
-  <% end %>
-
   <% @edf.signals.each_with_index do |signal, signal_index| %>
     <% physical_values = (signal.physical_values || []).collect{|i| i.to_f.round(2)} %>
     <% adjusted_samples_per_data_record = signal.samples_per_data_record %>
@@ -47,7 +24,7 @@
           data-minimum-value="<%= physical_values.min %>"
           data-grid="<%= (signal_index % 3) + 1 %>"
           data-physical-dimension="<%= signal.physical_dimension %>"
-          data-auto-scale="<% if @params['auto'].to_s.strip != '' %><%= ((/#{@params['auto'].to_s.strip}/i =~ signal.label) != nil) ? 1 : 0 %><% else %>0<% end %>"></div>
+          data-auto-scale="<% if params['auto'].to_s.strip != '' %><%= ((/#{params['auto'].to_s.strip}/i =~ signal.label) != nil) ? 1 : 0 %><% else %>0<% end %>"></div>
   <% end %>
 
   <canvas id="myCanvas" width="1200" height="<%= @signal_padding + @signal_count * (@signal_height + @signal_padding) %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
@@ -58,9 +35,9 @@
 <% if @edf and false %>
   <table class="table table-striped"><col width="250px"/>
     <tr><th colspan="2">General</th></tr>
-    <tr><td>First Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=1<%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>">1</a></td></tr>
-    <tr><td>Current Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @page %></a></td></tr>
-    <tr><td>Last Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= @params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{@params["signal"]}" if @params["signal"].to_s.strip != '' %>&page=<%= @max_page %><%= "&auto=#{@params["auto"]}" if @params["auto"].to_s.strip != '' %>"><%= @max_page %></a></td></tr>
+    <tr><td>First Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=1<%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>">1</a></td></tr>
+    <tr><td>Current Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= @page %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>"><%= @page %></a></td></tr>
+    <tr><td>Last Epoch</td><td><a href="<%= env["SCRIPT_NAME"] %>?name=<%= params["name"] %><%= "&window=#{@samples_per_page}" if @samples_per_page.to_s.strip != '' and @samples_per_page.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= @max_page %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>"><%= @max_page %></a></td></tr>
     <th colspan="2">EDF Header</th>
     <tr><td>Version</td><td><%= @edf.version %></td></tr>
     <% if false %>

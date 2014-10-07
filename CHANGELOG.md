@@ -9,6 +9,7 @@
 - Added ability to auto scale specific signals by using the auto paramter:
   - `&auto=SIGNALONE|SIGNALTWO`
 - Added hypnogram visualization and navigation by clicking on the hypnogram
+- EDF access is now controlled directly through the NSRR website
 - **Gem Changes**
   - Updated to edfize 0.2.0.beta1
     - edfize 0.2.0 provides the ability to load individual epochs from an EDF

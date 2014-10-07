@@ -23,45 +23,37 @@
     </style>
   </head>
   <body style="margin-top:51px;">
-    <% req = Rack::Request.new(env) %>
-    <% @params = req.params %>
-
-    <% @edf_name = @edf_names.select{|edf_name| File.basename(edf_name) == @params['name'].to_s.strip}.first ? @edf_names.select{|edf_name| File.basename(edf_name) == @params['name'].to_s.strip}.first : @edf_names.first %>
-    <% @edf = Edfize::Edf.new(@edf_name) if @edf_name %>
-
-    <% @page = (@params["page"].to_i > 1 ? @params["page"].to_i : 1 ) %>
-    <%# Default Window Size should equal 30 second increments %>
-    <% @default_window_size = (@params["window"].to_i > 0 && @params["window"].to_i <= 60 ? @params["window"].to_i : 30) %>
-    <% @samples_per_page = @default_window_size %>
-
-    <% @epoch_number = @page %>
-    <% @epoch_window = @default_window_size %>
+    <div style="display:none">
+      <% if json_object %>
+        <ul>
+          <% json_object.each do |dataset_hash| %>
+            <li><%= dataset_hash['name'] %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <p>CONFIG URL: <%= config_reader.url %></p>
+      <p><%= access_hash.inspect %></p>
+    </div>
 
     <input type="hidden" id="epoch_number" name="epoch_number" value="<%= @epoch_number %>">
     <input type="hidden" id="epoch_window" name="epoch_window" value="<%= @epoch_window %>">
-    <input type="hidden" id="color" name="color" value="<%= @params["color"] %>">
-    <input type="hidden" id="grid" name="grid" value="<%= @params["grid"] %>">
-    <input type="hidden" id="fast" name="fast" value="<%= @params["fast"] %>">
+    <input type="hidden" id="color" name="color" value="<%= params["color"] %>">
+    <input type="hidden" id="grid" name="grid" value="<%= params["grid"] %>">
+    <input type="hidden" id="fast" name="fast" value="<%= params["fast"] %>">
 
     <% @start_time = Time.now %>
-    <% if @edf %>
-      <% @samples_per_page = @default_window_size / @edf.duration_of_a_data_record %> <%# 30 second per page / 1 second per sample = 30 samples per page %><br />
-
-      <% @max_page = [(@edf.number_of_data_records * 1.0 / @samples_per_page).ceil, 1].max %>
-      <% @page = [@page, @max_page].min %>
-
-      <% @edf.load_epoch(@page-1,@samples_per_page) if @edf %>
-    <% end %>
 
     <%= ERB.new(IO.read('views/_header.html.erb'), nil, nil, '_erbout2').result(binding) %>
     <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
-      <% @signal_height = (@params['signal'].to_i >= 1 ? @params['signal'].to_i : 50) %>
-      <% @signal_padding = 20 %>
-      <%= ERB.new(IO.read('views/_hypnogram.html.erb'), nil, nil, '_erbout3').result(binding) %>
-      <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout4').result(binding) %>
+      <% if @edf %>
+        <%= ERB.new(IO.read('views/_hypnogram.html.erb'), nil, nil, '_erbout3').result(binding) %>
+        <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout4').result(binding) %>
+      <% else %>
+        <%= ERB.new(IO.read('views/_no_access.html.erb'), nil, nil, '_erbout5').result(binding) %>
+      <% end %>
       <footer class="text-muted" style="text-align:center">
         Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
-        &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms &middot; <span id="drawing_time"></span>
+        &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms <span id="drawing-time"></span>
       </footer>
     </div>
   </body>

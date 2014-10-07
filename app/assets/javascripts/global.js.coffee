@@ -7,7 +7,7 @@
 
 @ready = () ->
   window.$canvas = $("#myCanvas")[0]
-  window.$ctx = window.$canvas.getContext("2d")
+  window.$ctx = window.$canvas.getContext("2d") if window.$canvas
   window.$signal_height = $("#myCanvas").data('signal-height')
   window.$signal_padding = $("#myCanvas").data('signal-padding')
 
@@ -24,7 +24,7 @@
 
   end = new Date().getTime()
   time = end - start
-  $("#drawing_time").html('Browser: ' + time + ' ms')
+  $("#drawing-time").html('&middot; Browser: ' + time + ' ms')
 
   # window.$canvas.addEventListener('mouseup', (evt) ->
   #   mousePos = getMousePos(evt)
