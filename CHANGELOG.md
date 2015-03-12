@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.0 (March 12, 2015)
 
 ### Enhancements
 - Added basic testing framework for rack app
