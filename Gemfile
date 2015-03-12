@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rack',   '~> 1.5.2'
-gem 'rake',   '~> 10.3.2'
+gem 'rack',   '~> 1.6.0'
+gem 'rake',   '~> 10.4.2'
 gem 'edfize', '~> 0.2.0'
 
 gem 'coffee-script'
