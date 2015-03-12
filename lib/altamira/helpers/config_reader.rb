@@ -4,7 +4,7 @@ module Altamira
   module Helpers
     class ConfigReader
 
-      attr_reader :url, :location
+      attr_reader :url, :location, :asset_path
 
 
       def initialize
@@ -20,6 +20,7 @@ module Altamira
           if sleepdata_config.kind_of?(Hash)
             @url = sleepdata_config['url'].to_s.strip
             @location = sleepdata_config['location'].to_s.strip
+            @asset_path = sleepdata_config['asset_path'].to_s.strip
           end
         rescue => e
         end
