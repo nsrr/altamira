@@ -11,6 +11,6 @@
 - Added hypnogram visualization and navigation by clicking on the hypnogram
 - EDF access is now controlled directly through the NSRR website
 - **Gem Changes**
-  - Updated to edfize 0.2.0.beta1
+  - Updated to edfize 0.2.0
     - edfize 0.2.0 provides the ability to load individual epochs from an EDF
 - Use of Ruby 2.2.1 is now recommended
