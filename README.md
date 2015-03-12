@@ -37,6 +37,8 @@ Create a `.sleepdata.yml` file that contains:
 ```
 # The www.sleepdata.org server location
 url: http://localhost/sleepdata
+# The assets path location, to allow assets to be referenced correctly
+url: /altamira
 # This refers to the symbolic link for the sleepdata datasets
 location: datasets
 ```
