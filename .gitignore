@@ -18,5 +18,9 @@
 # Ignore Coverage
 /coverage
 
+# Ignore datasets symbolic link
+/datasets
+/datasets/**/*
+
 # OS generated files #
 .DS_Store
