@@ -8,7 +8,7 @@ gem 'edfize', '~> 0.2.0'
 
 gem 'coffee-script'
 gem 'sprockets', '~> 2.12.1'
-gem 'turbolinks'
+gem 'turbolinks', '~> 2.5.3'
 
 # Testing
 group :test do
