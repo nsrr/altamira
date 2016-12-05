@@ -2,7 +2,7 @@
 
 ### Enhancements
 - **Gem Changes**
-  - Updated to Ruby 2.3.0
+  - Updated to Ruby 2.3.3
   - Updated simplecov to 0.11.2
   - Set turbolinks dependency to 2.5.3
 
