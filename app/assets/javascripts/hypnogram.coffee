@@ -1,4 +1,4 @@
-@setupHypnogram = () ->
+@setupHypnogram = ->
   window.$hypnogramCanvas = $("#hypnogram")[0]
   window.$hypnogramContext = window.$hypnogramCanvas.getContext("2d")
   window.$maxPage = $("[data-object='hypnogram-data']").data('max-page')
@@ -14,7 +14,7 @@
     evt.stopPropagation()
   )
 
-@drawHypnogram = () ->
+@drawHypnogram = ->
   # window.$signal_height = $("#myCanvas").data('signal-height')
   # window.$signal_padding = $("#myCanvas").data('signal-padding')
   element = $("[data-object='hypnogram-data']")

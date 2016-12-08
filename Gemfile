@@ -8,7 +8,7 @@ gem 'rake',   '~> 10.4.2'
 
 gem 'coffee-script'
 gem 'sprockets', '~> 3.7.0'
-gem 'turbolinks', '~> 2.5.3'
+gem 'turbolinks-source', '~> 5.0.0'
 
 # Testing
 group :test do

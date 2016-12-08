@@ -5,7 +5,7 @@
     y: evt.clientY - rect.top
   }
 
-@ready = () ->
+@ready = ->
   window.$canvas = $("#myCanvas")[0]
   window.$ctx = window.$canvas.getContext("2d") if window.$canvas
   window.$signal_height = $("#myCanvas").data('signal-height')
@@ -32,16 +32,14 @@
   # , false)
 
 $(document).ready(ready)
-$(document).on("page:load", () ->
+$(document).on('turbolinks:load', ->
   ready()
   window.scrollTo(window.$prevPageXOffset, window.$prevPageYOffset)
-)
-$(document).on("page:change", () ->
   window.$prevPageYOffset = window.pageYOffset
   window.$prevPageXOffset = window.pageXOffset
 )
 
-$(document).keydown( (e) ->
+$(document).keydown((e) ->
   if e.which == 37 && !$("input, textarea, select, a").is(":focus")
     $("#retreat")[0].click()
     return false
