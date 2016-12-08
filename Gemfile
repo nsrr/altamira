@@ -2,9 +2,9 @@
 
 source 'https://rubygems.org'
 
+gem 'edfize', '~> 0.4.0'
 gem 'rack',   '~> 1.6.0'
 gem 'rake',   '~> 10.4.2'
-gem 'edfize', '~> 0.2.0'
 
 gem 'coffee-script'
 gem 'sprockets', '~> 2.12.1'

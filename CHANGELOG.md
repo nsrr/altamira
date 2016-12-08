@@ -1,5 +1,9 @@
 ## 0.3.0
 
+### Enhancements
+- **Gem Changes**
+  - Updated to edfize 0.4.0
+
 ## 0.2.0 (December 5, 2016)
 
 ### Enhancements
