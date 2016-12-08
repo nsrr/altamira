@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'edfize', '~> 0.4.0'
 gem 'rack',   '~> 2.0.1'
-gem 'rake',   '~> 10.4.2'
+gem 'rake',   '~> 12.0.0'
 
 gem 'coffee-script'
 gem 'sprockets', '~> 3.7.0'
