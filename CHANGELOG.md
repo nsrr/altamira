@@ -3,6 +3,8 @@
 ### Enhancements
 - **Gem Changes**
   - Updated to edfize 0.4.0
+  - Updated to rack 2.0.1
+  - Updated to sprockets 3.7.0
   - Removed minitest-reporters
 
 ## 0.2.0 (December 5, 2016)
