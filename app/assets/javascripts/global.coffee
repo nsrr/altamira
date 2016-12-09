@@ -31,7 +31,6 @@
   #   point(mousePos.x, mousePos.y)
   # , false)
 
-$(document).ready(ready)
 $(document).on('turbolinks:load', ->
   ready()
   window.scrollTo(window.$prevPageXOffset, window.$prevPageYOffset)

@@ -5,17 +5,15 @@
   else
     graph_minimum = $(element).data('physical-minimum')
     graph_maximum = $(element).data('physical-maximum')
-  return { min: graph_minimum, max: graph_maximum }
+  return { min: graph_minimum, max: graph_maximum, distance: graph_maximum - graph_minimum }
 
-@scaleAndOffset = (y_value, element) ->
-  graph = getGraphMinMax(element)
-  distance = graph.max - graph.min
-  return (y_value - graph.min) * (window.$signal_height / (distance)) - (window.$signal_height / 2)
+@scaleAndOffset = (y_value, graph) ->
+  return (y_value - graph.min) * (window.$signal_height / (graph.distance)) - (window.$signal_height / 2)
 
 @drawGrid = (element, x_offset, y_offset) ->
   graph = getGraphMinMax(element)
-  y_axis_top = scaleAndOffset(graph.max, element)
-  y_axis_bottom = scaleAndOffset(graph.min, element)
+  y_axis_top = scaleAndOffset(graph.max, graph)
+  y_axis_bottom = scaleAndOffset(graph.min, graph)
   signal_canvas_width = window.$canvas.width - x_offset
   starting_number =  ($("#epoch_number").val() - 1) * 5
   ending_number = starting_number + 5
@@ -41,9 +39,9 @@
 
   graph = getGraphMinMax(element)
 
-  y_axis_top = scaleAndOffset(graph.max, element)
-  y_axis_center = scaleAndOffset(0, element)
-  y_axis_bottom = scaleAndOffset(graph.min, element)
+  y_axis_top = scaleAndOffset(graph.max, graph)
+  y_axis_center = scaleAndOffset(0, graph)
+  y_axis_bottom = scaleAndOffset(graph.min, graph)
 
   top_label = graph.max
   bottom_label = graph.min
@@ -64,10 +62,11 @@
     drawGrid(element, x_offset, y_offset)
 
   if $("#color").val() == '1'
-    y_zero = scaleAndOffset(0, element)
-    y_max = scaleAndOffset(graph.max, element)
+    y_zero = scaleAndOffset(0, graph)
+    y_max = scaleAndOffset(graph.max, graph)
+
     for i in [0..array.length-2]
-      offset_box(i*magnitude_x, scaleAndOffset(array[i], element),(i+1)*magnitude_x, scaleAndOffset(array[i+1], element),x_offset,y_offset,y_zero,y_max)
+      offset_box(i*magnitude_x, scaleAndOffset(array[i], graph),(i+1)*magnitude_x, scaleAndOffset(array[i+1], graph),x_offset,y_offset,y_zero,y_max)
 
   width = 1
   color = "#333333"
@@ -75,5 +74,5 @@
   window.$ctx.lineWidth = width
   window.$ctx.beginPath()
   for i in [0..array.length-2]
-    offset_line(i*magnitude_x, scaleAndOffset(array[i], element),(i+1)*magnitude_x, scaleAndOffset(array[i+1], element),width,color,x_offset,y_offset,true)
+    offset_line(i*magnitude_x, scaleAndOffset(array[i], graph),(i+1)*magnitude_x, scaleAndOffset(array[i+1], graph),width,color,x_offset,y_offset,true)
   window.$ctx.stroke()

@@ -33,18 +33,19 @@
   window.$hypnogramContext.strokeStyle = color
   window.$hypnogramContext.lineWidth = width
 
+  graph = getGraphMinMax(element)
+
   drawCurrentWindow(element, x_offset, y_offset, signal_canvas_width)
 
   window.$hypnogramContext.beginPath()
   for i in [0..array.length-2]
-    offset_line(i*magnitude_x, scaleAndOffset(array[i], element),(i+1)*magnitude_x, scaleAndOffset(array[i+1], element),width,color,x_offset,y_offset,true,window.$hypnogramCanvas,window.$hypnogramContext)
+    offset_line(i*magnitude_x, scaleAndOffset(array[i], graph),(i+1)*magnitude_x, scaleAndOffset(array[i+1], graph),width,color,x_offset,y_offset,true,window.$hypnogramCanvas,window.$hypnogramContext)
   window.$hypnogramContext.stroke()
 
-  graph = getGraphMinMax(element)
   top_label = graph.max
   bottom_label = graph.min
-  y_axis_top = scaleAndOffset(graph.max, element)
-  y_axis_bottom = scaleAndOffset(graph.min, element)
+  y_axis_top = scaleAndOffset(graph.max, graph)
+  y_axis_bottom = scaleAndOffset(graph.min, graph)
 
   offset_label(-30,0,'Hypnogram',x_offset,y_offset,'right',null,null,window.$hypnogramCanvas,window.$hypnogramContext)
   offset_label(-10,y_axis_top,top_label,x_offset,y_offset,null,'middle',"#777",window.$hypnogramCanvas,window.$hypnogramContext)
@@ -66,6 +67,7 @@
 
 @drawCurrentWindow = (element, x_offset, y_offset, signal_canvas_width) ->
   element = $("[data-object='hypnogram-data']")
+  graph = getGraphMinMax(element)
 
   left_window = $(element).data('left-window')
   center_window = $(element).data('center-window')
@@ -75,8 +77,8 @@
 
   left_box_x = 0
   left_box_x2 = left_window*signal_canvas_width
-  y = scaleAndOffset(-0.1, element)
-  y2 = scaleAndOffset(5.1, element)
+  y = scaleAndOffset(-0.1, graph)
+  y2 = scaleAndOffset(5.1, graph)
   right_box_x = (left_window)*signal_canvas_width + center_width
   right_box_x2 = signal_canvas_width
 
