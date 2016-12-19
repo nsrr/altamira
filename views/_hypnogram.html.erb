@@ -1,33 +1,19 @@
-<% @staging_file = @edf_name.gsub(/\.edf$/i, '-staging.csv') %>
-<% if File.exist?(@staging_file) %>
-  <% stages = [] %>
-  <% begin %>
-    <% File.open(@staging_file, "r") do |f| %>
-      <% index = -1 %>
-      <% f.each_line do |line| %>
-        <% index += 1 %>
-        <% next if index == 0 %>
-        <% stages << line.split(',')[1].to_i %>
-      <% end %>
-    <% end %>
-    <% left_window = (@page-1) * 1.0 / @max_page %>
-    <% center_window = 1.0 / @max_page %>
-    <% right_window = 1.0 - left_window - center_window %>
+<% unless @stages.empty? %>
+  <% left_window = (@page-1) * 1.0 / @max_page %>
+  <% center_window = 1.0 / @max_page %>
+  <% right_window = 1.0 - left_window - center_window %>
 
-    <div data-object="hypnogram-data"
-        data-array="<%= stages %>"
-        data-label="Sleep Stages"
-        data-samples-per-data-record="<%= stages.size / @samples_per_page %>"
-        data-physical-maximum="<%= stages.max %>"
-        data-physical-minimum="<%= stages.min %>"
-        data-grid="0"
-        data-left-window="<%= left_window %>"
-        data-center-window="<%= center_window %>"
-        data-right-window="<%= right_window %>"
-        data-max-page="<%= @max_page %>"></div>
-    <canvas id="hypnogram" style="cursor:pointer" width="1200" height="<%= @signal_padding + @signal_height + @signal_padding %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
-  <% rescue %>
-  <% end %>
-
+  <div data-object="hypnogram-data"
+      data-array="<%= @stages %>"
+      data-label="Sleep Stages"
+      data-samples-per-data-record="<%= @stages.size / @samples_per_page %>"
+      data-physical-maximum="<%= @stages.max %>"
+      data-physical-minimum="<%= @stages.min %>"
+      data-grid="0"
+      data-left-window="<%= left_window %>"
+      data-center-window="<%= center_window %>"
+      data-right-window="<%= right_window %>"
+      data-max-page="<%= @max_page %>"></div>
+  <canvas id="hypnogram" style="cursor: pointer;" width="1200" height="<%= @signal_padding + @signal_height + @signal_padding %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
 <% end %>
 

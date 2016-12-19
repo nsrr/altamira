@@ -42,16 +42,34 @@ app = proc do |env|
     @max_page = 1
 
     if @edf
-      @data_records_per_window = (@window.to_f / @edf.duration_of_a_data_record).ceil # 30 second per window / 1 second per sample = 30 samples per window
+      # 30 second per window / 1 second per sample = 30 samples per window
+      @data_records_per_window = (@window.to_f / @edf.duration_of_a_data_record).ceil
       @max_page = [(@edf.number_of_data_records.to_f * @edf.duration_of_a_data_record / @window).ceil, 1].max
       @page = [@page, @max_page].min
-      @edf.load_epoch(@page-1,@window)
+      @edf.load_epoch(@page-1, @window)
     end
 
     @samples_per_page = @data_records_per_window
 
     @signal_height = (params['signal'].to_i >= 1 ? params['signal'].to_i : 50)
     @signal_padding = 20
+
+    @staging_file = @edf_name.gsub(/\.edf$/i, '-staging.csv').gsub(%r{/edfs/}, '/annotations-staging/')
+
+    if File.exist?(@staging_file)
+      @stages = []
+      begin
+        File.open(@staging_file, 'r') do |f|
+          index = -1
+          f.each_line do |line|
+            index += 1
+            next if index == 0
+            @stages << line.split(',')[1].to_i
+          end
+        end
+      rescue
+      end
+    end
 
     [200,
       { "Content-Type" => "text/html" },

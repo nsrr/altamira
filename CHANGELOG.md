@@ -3,6 +3,7 @@
 ### Enhancements
 - **General Changes**
   - Greatly improved the speed at which signals are drawn on the HTML5 canvas
+  - Improved staging file lookup
 - **Gem Changes**
   - Updated to edfize 0.4.0
   - Updated to rack 2.0.1
