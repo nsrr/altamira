@@ -5,6 +5,7 @@
   - Greatly improved the speed at which signals are drawn on the HTML5 canvas
   - Improved staging file lookup
 - **Gem Changes**
+  - Updated to Ruby 2.4.0
   - Updated to edfize 0.4.0
   - Updated to rack 2.0.1
   - Updated to sprockets 3.7.0
