@@ -1,3 +1,5 @@
+## 0.4.0
+
 ## 0.3.0 (January 6, 2017)
 
 ### Enhancements
