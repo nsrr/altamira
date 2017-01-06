@@ -7,6 +7,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'altamira'
 
+MAX_WINDOW_SIZE = 300
+
 config_reader = Altamira::Helpers::ConfigReader.new
 
 app = proc do |env|
@@ -23,7 +25,7 @@ app = proc do |env|
 
     @page = (params['page'].to_i > 1 ? params['page'].to_i : 1 )
     # Default Window Size should equal 30 second increments, @window is in seconds
-    @window = (params['window'].to_i.positive? && params['window'].to_i <= 60 ? params['window'].to_i : 30)
+    @window = (params['window'].to_i.positive? && params['window'].to_i <= MAX_WINDOW_SIZE ? params['window'].to_i : 30)
     @data_records_per_window = 1
 
     @epoch_number = @page

@@ -8,6 +8,7 @@
     maximum when autoscaling is off
   - Sleep stages for hypnograms are now loaded directly from XML Annotation
     files
+  - Added ability to view 2 minute and 5 minute windows
 - **Gem Changes**
   - Updated to Ruby 2.4.0
   - Updated to edfize 0.4.0
