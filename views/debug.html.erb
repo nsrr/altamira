@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>Debug</h1>
+
+  <table class="table table-bordered table-striped">
+    <col width="25%">
+    <col width="75%">
+    <tbody>
+      <tr>
+        <th>env['PATH_INFO']</th>
+        <td><%= env['PATH_INFO'] %></td>
+      </tr>
+      <tr>
+        <th>env['SCRIPT_NAME']</th>
+        <td><%= env['SCRIPT_NAME'] %></td>
+      </tr>
+      <tr>
+        <th>ENV['PASSENGER_APP_ENV']</th>
+        <td><%= ENV['PASSENGER_APP_ENV'] %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-striped">
+    <col width="25%">
+    <col width="75%">
+    <tbody>
+      <% ENV.each do |key, value| %>
+        <tr>
+          <th>ENV['<%= key %>']</th>
+          <td><%= value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-striped">
+    <col width="25%">
+    <col width="75%">
+    <tbody>
+      <% env.reject { |key, _| %w(PASSENGER_CONNECT_PASSWORD).include?(key) }.each do |key, value| %>
+        <tr>
+          <th>env['<%= key %>']</th>
+          <td style="word-break: break-word;"><%= value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

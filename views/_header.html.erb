@@ -13,14 +13,15 @@
       <ul class="nav navbar-nav">
         <% if @edf %>
           <li>
-            <a href="<%= config_reader.url %>/datasets/<%= params['slug'] %>/files/<%= access_hash['path'].split(File.basename(@edf.filename)).first %>?f=<%= File.basename(@edf.filename) %>" target="_blank"><%= File.basename(@edf.filename) %></a>
+            <a href="<%= config_reader.url %>/datasets/<%= params['slug'] %>/files/<%= @access_hash['path'].split(File.basename(@edf.filename)).first %>?f=<%= File.basename(@edf.filename) %>" target="_blank"><%= File.basename(@edf.filename) %></a>
           </li>
         <% end %>
+
 
         <li class="dropdown">
           <a href="#" data-toggle="dropdown"><%= @window %> Second Window <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <% [5,15,30,60].each do |window| %>
+            <% [5, 15, 30, 60].each do |window| %>
               <li class="<%= 'active' if @window == window %>"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{window}" if window != 30 %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= ((@page - 1) * @samples_per_page / window) + 1 %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>"><%= window %></a></li>
             <% end %>
           </ul>
@@ -29,8 +30,8 @@
         <li class="<%= 'disabled' if @page == 1 %>"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{@window}" if @window.to_s.strip != '' and @window.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= [@page - 1, 1].max %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>" id="retreat">&larr; Retreat</a></li>
         <li class="<%= 'disabled' if @page == @max_page %>"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{@window}" if @window.to_s.strip != '' and @window.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= [@page + 1, @max_page].min %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>" id="advance">Advance &rarr;</a></li>
         <li class="<%= 'disabled' if @page == @max_page %>"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{@window}" if @window.to_s.strip != '' and @window.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %>&page=<%= @page %><%= params["auto"].to_s.strip != '' ? '' : '&auto=.' %>" id="advance">Turn Auto Scale <%= params["auto"].to_s.strip != '' ? 'Off' : 'On' %></a></li>
-        <li style="display:none"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{@window}" if @window.to_s.strip != '' and @window.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>&page=<%= @page %>" id="hypnogram-link"></a></li>
+        <li style="display: none;"><a href="<%= env["SCRIPT_NAME"] %>?slug=<%= params["slug"] %>&path=<%= params["path"] %><%= "&window=#{@window}" if @window.to_s.strip != '' and @window.to_s.strip != '30' %><%= "&signal=#{params["signal"]}" if params["signal"].to_s.strip != '' %><%= "&auto=#{params["auto"]}" if params["auto"].to_s.strip != '' %>&page=<%= @page %>" id="hypnogram-link"></a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
 </div>
