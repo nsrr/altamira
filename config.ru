@@ -51,12 +51,17 @@ app = proc do |env|
     @signal_height = (params['signal'].to_i >= 1 ? params['signal'].to_i : 50)
     @signal_padding = 20
 
-    @staging_file = @edf_name.gsub(/\.edf$/i, '-staging.csv').gsub(%r{/edfs/}, '/annotations-staging/')
+    @staging_file_xml = @edf_name.gsub(/\.edf$/i, '-profusion.xml').gsub(%r{/edfs/}, '/annotations-events-profusion/')
+    @staging_file_csv = @edf_name.gsub(/\.edf$/i, '-staging.csv').gsub(%r{/edfs/}, '/annotations-staging/')
 
-    if File.exist?(@staging_file)
-      @stages = []
+    @stages = []
+
+    if File.exist?(@staging_file_xml)
+      annotation = Altamira::Annotation.new(@staging_file_xml)
+      @stages = annotation.sleep_stages
+    elsif File.exist?(@staging_file_csv)
       begin
-        File.open(@staging_file, 'r') do |f|
+        File.open(@staging_file_csv, 'r') do |f|
           index = -1
           f.each_line do |line|
             index += 1

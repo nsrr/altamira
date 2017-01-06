@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'altamira/helpers/json_request'
-require 'altamira/helpers/config_reader'
+require 'altamira/helpers/all'
+require 'altamira/models/all'
 require 'altamira/version'
 require 'erb'
 
