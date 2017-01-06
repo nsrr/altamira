@@ -52,7 +52,7 @@
   offset_label(-10,y_axis_bottom,bottom_label,x_offset,y_offset,null,'middle',"#777",window.$hypnogramCanvas,window.$hypnogramContext)
 
 
-@gray_box = (x, y, x2, y2, canvas = window.$canvas, context = window.$ctx, color = '#f2f2f2') ->
+@gray_box = (x, y, x2, y2, canvas = window.$canvas, context = window.$ctx, color = '#f6f6f6') ->
   context.fillStyle = color
   context.beginPath()
   context.moveTo(x, canvas.height-y)
@@ -83,7 +83,7 @@
   right_box_x2 = signal_canvas_width
 
   gray_offset_box(left_box_x,y,left_box_x2,y2,x_offset,y_offset,window.$hypnogramCanvas,window.$hypnogramContext)
-  # gray_offset_box(left_box_x2,y,right_box_x,y2,x_offset,y_offset,window.$hypnogramCanvas,window.$hypnogramContext, '#00ff00')
+  gray_offset_box(left_box_x2,y,right_box_x,y2,x_offset,y_offset,window.$hypnogramCanvas,window.$hypnogramContext, '#ff8a80')
   gray_offset_box(right_box_x,y,right_box_x2,y2,x_offset,y_offset,window.$hypnogramCanvas,window.$hypnogramContext)
 
 
