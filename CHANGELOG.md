@@ -4,6 +4,8 @@
 - **General Changes**
   - Greatly improved the speed at which signals are drawn on the HTML5 canvas
   - Improved staging file lookup
+  - Signals with negative gains now swap their physical minimum and physical
+    maximum when autoscaling is off
 - **Gem Changes**
   - Updated to Ruby 2.4.0
   - Updated to edfize 0.4.0
