@@ -25,7 +25,7 @@
 
   signal_canvas_width = window.$hypnogramCanvas.width - x_offset
   zoom_level = signal_canvas_width / $('#hypnogram').data('samples-per-page')
-  samples_per_data_record = parseInt($(element).data('samples-per-data-record'))
+  samples_per_data_record = parseFloat($(element).data('samples-per-data-record'))
   magnitude_x = zoom_level / samples_per_data_record
 
   width = 1

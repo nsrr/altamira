@@ -35,7 +35,7 @@
   signal_canvas_width = window.$canvas.width - x_offset
   zoom_level = signal_canvas_width / $('#myCanvas').data('samples-per-page')
 
-  magnitude_x = zoom_level * 1 / samples_per_data_record
+  magnitude_x = zoom_level / samples_per_data_record
 
   graph = getGraphMinMax(element)
 

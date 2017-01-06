@@ -6,7 +6,7 @@
   <div data-object="hypnogram-data"
       data-array="<%= @stages %>"
       data-label="Sleep Stages"
-      data-samples-per-data-record="<%= @stages.size / @samples_per_page %>"
+      data-samples-per-data-record="<%= @stages.size.to_f / @samples_per_page %>"
       data-physical-maximum="<%= @stages.max %>"
       data-physical-minimum="<%= @stages.min %>"
       data-grid="0"
@@ -16,4 +16,3 @@
       data-max-page="<%= @max_page %>"></div>
   <canvas id="hypnogram" style="cursor: pointer;" width="1200" height="<%= @signal_padding + @signal_height + @signal_padding %>" data-samples-per-page="<%= @samples_per_page %>" data-signal-height="<%= @signal_height %>" data-signal-padding="<%= @signal_padding %>"></canvas>
 <% end %>
-
