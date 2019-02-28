@@ -12,8 +12,8 @@
 /log/*.log
 /tmp
 
-# Ignore Gemfile.lock
-/Gemfile.lock
+# Project Files
+/gems.locked
 
 # Ignore Coverage
 /coverage

@@ -2,7 +2,7 @@ language: ruby
 rvm:
 - 2.6.1
 - ruby-head
-# gemfile: "gems.rb"
+gemfile: "gems.rb"
 matrix:
   allow_failures:
   - rvm: ruby-head
