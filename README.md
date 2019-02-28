@@ -1,7 +1,7 @@
 Altamira
 ========
 
-[![Build Status](https://travis-ci.org/nsrr/altamira.svg?branch=master)](https://travis-ci.org/nsrr/altamira)
+[![Build Status](https://travis-ci.com/nsrr/altamira.svg?branch=master)](https://travis-ci.com/nsrr/altamira)
 [![Dependency Status](https://gemnasium.com/nsrr/altamira.svg)](https://gemnasium.com/nsrr/altamira)
 [![Code Climate](https://codeclimate.com/github/nsrr/altamira/badges/gpa.svg)](https://codeclimate.com/github/nsrr/altamira)
 
