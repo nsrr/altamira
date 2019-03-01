@@ -6,6 +6,9 @@
   - Update to edfize 0.5.0
   - Update to simplecov 0.16.1
 
+### Bug Fix
+- Fix an issue encoding cookies that prevented granting access to EDF files
+
 ## 0.3.0 (January 6, 2017)
 
 ### Enhancements

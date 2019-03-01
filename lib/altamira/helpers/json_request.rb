@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'openssl'
-require 'net/http'
-require 'json'
+require "openssl"
+require "net/http"
+require "json"
+require "cgi"
 
 module Altamira
   module Helpers
@@ -21,7 +22,7 @@ module Altamira
         @http = Net::HTTP.new(@url.host, @url.port)
         @cookies = cookies
 
-        if @url.scheme == 'https'
+        if @url.scheme == "https"
           @http.use_ssl = true
           @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
@@ -30,9 +31,11 @@ module Altamira
       end
 
       def get
-        req = Net::HTTP::Get.new(@url.path, 'Cookie' => @cookies.collect { |k, v| "#{k}=#{v};" }.join(' '))
+        headers = {
+          "Cookie" => @cookies.collect { |k, v| "#{k}=#{CGI.escape(v)};" }.join(" ")
+        }
         response = @http.start do |http|
-          http.request(req)
+          http.get(@url.path, headers)
         end
         JSON.parse(response.body)
       rescue

@@ -19,9 +19,11 @@ app = proc do |env|
     slug = params['slug']
     path = params['path']
 
-    @json_object = Altamira::Helpers::JsonRequest.get("#{config_reader.url}/datasets.json", req.cookies)
+    cookies = req.cookies
 
-    @access_hash = Altamira::Helpers::JsonRequest.get("#{config_reader.url}/datasets/#{params['slug']}/access/#{params['path']}", req.cookies) || {}
+    @access_hash = Altamira::Helpers::JsonRequest.get(
+      "#{config_reader.url}/datasets/#{params["slug"]}/access/#{params["path"]}", cookies
+    ) || {}
 
     @page = (params['page'].to_i > 1 ? params['page'].to_i : 1 )
     # Default Window Size should equal 30 second increments, @window is in seconds
