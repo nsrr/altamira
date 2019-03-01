@@ -3,7 +3,7 @@
 # rubocop:disable Layout/ExtraSpacing
 source "https://rubygems.org"
 
-gem "edfize",            "~> 0.5.0"
+gem "edfize",            "~> 0.6.0"
 gem "rack",              "~> 2.0.1"
 gem "rake",              "~> 12.0.0"
 gem "xml-simple",        "~> 1.1.5"

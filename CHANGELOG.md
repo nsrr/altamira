@@ -3,7 +3,7 @@
 ### Enhancements
 - **Gem Changes**
   - Update to ruby 2.6.1
-  - Update to edfize 0.5.0
+  - Update to edfize 0.6.0
   - Update to simplecov 0.16.1
   - Update to bootstrap 4.3.1
 
