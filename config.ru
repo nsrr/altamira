@@ -94,7 +94,9 @@ end
 
 if ENV["PASSENGER_APP_ENV"] == "development"
   debug = proc do |env|
-    Altamira.render_page(%w(debug), env: env)
+    @views = %w(debug)
+    params = {}
+    Altamira.render_page(binding, env: env)
   end
 
   map "/debug" do
@@ -103,7 +105,9 @@ if ENV["PASSENGER_APP_ENV"] == "development"
 end
 
 version = proc do |env|
-  Altamira.render_page(%w(version), env: env)
+  @views = %w(version)
+  params = {}
+  Altamira.render_page(binding, env: env)
 end
 
 map "/version" do

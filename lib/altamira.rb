@@ -17,8 +17,7 @@ module Altamira
     error_page(e)
   end
 
-  def self.render_page(views, env: {})
-    @views = views
+  def self.render_page(binding, env: {})
     [
       200,
       { "Content-Type" => "text/html" },

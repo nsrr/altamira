@@ -16,8 +16,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script src="<%= config_reader.asset_path %>/assets/application.js"></script>
+
+    <style type="text/css">
+      .page-box {
+        min-height: calc(100vh - 57px - 100px);
+      }
+    </style>
   </head>
-  <body style="margin-top: 77px;">
+  <body>
     <div style="display: none;">
       <p>CONFIG URL: <%= config_reader.url %></p>
       <p><%= @access_hash.inspect %></p>
@@ -32,18 +38,19 @@
     <% @start_time = Time.now %>
 
     <%= ERB.new(IO.read("views/_header.html.erb"), nil, nil, "_erbout2").result(binding) %>
-    <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
-      <% if @edf %>
-        <%= ERB.new(IO.read("views/_hypnogram.html.erb"), nil, nil, "_erbout3").result(binding) %>
-        <%= ERB.new(IO.read("views/_signals.html.erb"), nil, nil, "_erbout4").result(binding) %>
-      <% else %>
-        <%= ERB.new(IO.read("views/_no_access.html.erb"), nil, nil, "_erbout5").result(binding) %>
-      <% end %>
-
-      <footer class="text-muted text-center">
-        Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
-        &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms <span id="drawing-time"></span>
-      </footer>
+    <div class="d-flex align-items-center justify-content-around page-box">
+      <div class="container-fluid">
+        <% if @edf %>
+          <%= ERB.new(IO.read("views/_hypnogram.html.erb"), nil, nil, "_erbout3").result(binding) %>
+          <%= ERB.new(IO.read("views/_signals.html.erb"), nil, nil, "_erbout4").result(binding) %>
+        <% else %>
+          <%= ERB.new(IO.read("views/_no_access.html.erb"), nil, nil, "_erbout5").result(binding) %>
+        <% end %>
+      </div>
     </div>
+    <footer class="text-muted text-center">
+      Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
+      &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms <span id="drawing-time"></span>
+    </footer>
   </body>
 </html>
