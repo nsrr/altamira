@@ -1,4 +1,4 @@
-## 0.4.0
+## 4.0.0
 
 ### Enhancements
 - **Gem Changes**
@@ -10,7 +10,7 @@
 ### Bug Fix
 - Fix an issue encoding cookies that prevented granting access to EDF files
 
-## 0.3.0 (January 6, 2017)
+## 3.0.0 (January 6, 2017)
 
 ### Enhancements
 - **General Changes**
@@ -30,7 +30,7 @@
   - Updated to rake 12.0.0
   - Removed minitest-reporters
 
-## 0.2.0 (December 5, 2016)
+## 2.0.0 (December 5, 2016)
 
 ### Enhancements
 - **Gem Changes**
@@ -38,7 +38,7 @@
   - Updated simplecov to 0.12.0
   - Set turbolinks dependency to 2.5.3
 
-## 0.1.0 (March 12, 2015)
+## 1.0.0 (March 12, 2015)
 
 ### Enhancements
 - Added basic testing framework for rack app
