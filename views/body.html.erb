@@ -9,22 +9,16 @@
 
     <title>Altamira</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <script src="<%= config_reader.asset_path %>/assets/application.js"></script>
-
-    <style type="text/css">
-      body, input, button, select, textarea, .navbar-search .search-query {
-        font-family: 'Open Sans', sans-serif;
-      }
-    </style>
   </head>
-  <body style="margin-top:51px;">
-    <div style="display:none">
+  <body style="margin-top: 77px;">
+    <div style="display: none;">
       <p>CONFIG URL: <%= config_reader.url %></p>
       <p><%= @access_hash.inspect %></p>
     </div>
@@ -37,16 +31,16 @@
 
     <% @start_time = Time.now %>
 
-    <%= ERB.new(IO.read('views/_header.html.erb'), nil, nil, '_erbout2').result(binding) %>
+    <%= ERB.new(IO.read("views/_header.html.erb"), nil, nil, "_erbout2").result(binding) %>
     <div class="container-fluid" style="margin-top:20px;margin-bottom:20px">
       <% if @edf %>
-        <%= ERB.new(IO.read('views/_hypnogram.html.erb'), nil, nil, '_erbout3').result(binding) %>
-        <%= ERB.new(IO.read('views/_signals.html.erb'), nil, nil, '_erbout4').result(binding) %>
+        <%= ERB.new(IO.read("views/_hypnogram.html.erb"), nil, nil, "_erbout3").result(binding) %>
+        <%= ERB.new(IO.read("views/_signals.html.erb"), nil, nil, "_erbout4").result(binding) %>
       <% else %>
-        <%= ERB.new(IO.read('views/_no_access.html.erb'), nil, nil, '_erbout5').result(binding) %>
+        <%= ERB.new(IO.read("views/_no_access.html.erb"), nil, nil, "_erbout5").result(binding) %>
       <% end %>
 
-      <footer class="text-muted" style="text-align:center">
+      <footer class="text-muted text-center">
         Altamira <a href="https://github.com/nsrr/altamira" target="_blank">v<%= Altamira::VERSION::STRING %></a>
         &middot; Server: <%= ((Time.now - @start_time) * 1000).floor %> ms <span id="drawing-time"></span>
       </footer>

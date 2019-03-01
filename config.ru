@@ -77,7 +77,7 @@ app = proc do |env|
     end
   end
 
-  Altamira.render_body(%w(body), binding)
+  Altamira.render_body(binding)
 rescue StandardError => e
   Altamira.error_page(e)
 end
@@ -100,6 +100,14 @@ if ENV["PASSENGER_APP_ENV"] == "development"
   map "/debug" do
     run debug
   end
+end
+
+version = proc do |env|
+  Altamira.render_page(%w(version), env: env)
+end
+
+map "/version" do
+  run version
 end
 
 map "/" do
