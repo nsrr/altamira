@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rubygems'
-require 'edfize'
+require "rubygems"
+require "edfize"
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'altamira'
+require "altamira"
 
 MAX_WINDOW_SIZE = 300
 
@@ -16,8 +16,8 @@ app = proc do |env|
     req = Rack::Request.new(env)
     params = req.params
 
-    slug = params['slug']
-    path = params['path']
+    slug = params["slug"]
+    path = params["path"]
 
     cookies = req.cookies
 
@@ -25,18 +25,18 @@ app = proc do |env|
       "#{config_reader.url}/datasets/#{params["slug"]}/access/#{params["path"]}", cookies
     ) || {}
 
-    @page = (params['page'].to_i > 1 ? params['page'].to_i : 1 )
+    @page = (params["page"].to_i > 1 ? params["page"].to_i : 1 )
     # Default Window Size should equal 30 second increments, @window is in seconds
-    @window = (params['window'].to_i.positive? && params['window'].to_i <= MAX_WINDOW_SIZE ? params['window'].to_i : 30)
+    @window = (params["window"].to_i.positive? && params["window"].to_i <= MAX_WINDOW_SIZE ? params["window"].to_i : 30)
     @data_records_per_window = 1
 
     @epoch_number = @page
     @epoch_window = @window
-    @edf_name = ''
+    @edf_name = ""
     @edf = nil
 
-    if @access_hash['result']
-      @edf_name = File.join(Dir.pwd, "#{config_reader.location}/#{@access_hash['dataset_id']}/files/#{@access_hash['path']}")
+    if @access_hash["result"]
+      @edf_name = File.join(Dir.pwd, "#{config_reader.location}/#{@access_hash["dataset_id"]}/files/#{@access_hash["path"]}")
       @edf = Edfize::Edf.new(@edf_name) rescue nil
     end
 
@@ -52,11 +52,11 @@ app = proc do |env|
 
     @samples_per_page = @data_records_per_window
 
-    @signal_height = (params['signal'].to_i >= 1 ? params['signal'].to_i : 50)
+    @signal_height = (params["signal"].to_i >= 1 ? params["signal"].to_i : 50)
     @signal_padding = 20
 
-    @staging_file_xml = @edf_name.gsub(/\.edf$/i, '-profusion.xml').gsub(%r{/edfs/}, '/annotations-events-profusion/')
-    @staging_file_csv = @edf_name.gsub(/\.edf$/i, '-staging.csv').gsub(%r{/edfs/}, '/annotations-staging/')
+    @staging_file_xml = @edf_name.gsub(/\.edf$/i, "-profusion.xml").gsub(%r{/edfs/}, "/annotations-events-profusion/")
+    @staging_file_csv = @edf_name.gsub(/\.edf$/i, "-staging.csv").gsub(%r{/edfs/}, "/annotations-staging/")
 
     @stages = []
 
@@ -65,12 +65,12 @@ app = proc do |env|
       @stages = annotation.sleep_stages
     elsif File.exist?(@staging_file_csv)
       begin
-        File.open(@staging_file_csv, 'r') do |f|
+        File.open(@staging_file_csv, "r") do |f|
           index = -1
           f.each_line do |line|
             index += 1
             next if index.zero?
-            @stages << line.split(',')[1].to_i
+            @stages << line.split(",")[1].to_i
           end
         end
       rescue
@@ -83,26 +83,26 @@ app = proc do |env|
   end
 end
 
-require 'sprockets'
+require "sprockets"
 
-map '/assets' do
+map "/assets" do
   environment = Sprockets::Environment.new
-  environment.append_path 'app/assets/javascripts'
-  environment.append_path "#{Gem::Specification.find_by_name('turbolinks-source').lib_dirs_glob}/assets/javascripts"
-  # environment.append_path 'app/assets/stylesheets'
+  environment.append_path "app/assets/javascripts"
+  environment.append_path "#{Gem::Specification.find_by_name("turbolinks-source").lib_dirs_glob}/assets/javascripts"
+  # environment.append_path "app/assets/stylesheets"
   run environment
 end
 
-if ENV['PASSENGER_APP_ENV'] == 'development'
+if ENV["PASSENGER_APP_ENV"] == "development"
   debug = proc do |env|
     Altamira.render_page(%w(debug), env: env)
   end
 
-  map '/debug' do
+  map "/debug" do
     run debug
   end
 end
 
-map '/' do
+map "/" do
   run app
 end
