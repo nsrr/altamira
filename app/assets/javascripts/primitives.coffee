@@ -1,7 +1,7 @@
 # Function from http://stackoverflow.com/a/10073788/1611947
 @pad = (n, width, z) ->
-  z = z || '0'
-  n = n + ''
+  z = z || "0"
+  n = n + ""
   return if n.length >= width then n else new Array(width - n.length + 1).join(z) + n
 
 @point = (x,y,width = 2,color = "#ADFF2F", context = window.$ctx) ->
@@ -23,12 +23,12 @@
 
 @box = (x,y,x2,y2,y_zero,y_max, canvas = window.$canvas, context = window.$ctx) ->
   grd = context.createLinearGradient(0, canvas.height-y_zero, 0, canvas.height-y_max)
-  grd.addColorStop(0, 'red')
-  grd.addColorStop(0.5, 'yellow')
-  grd.addColorStop(1, 'green')
-  context.fillStyle = grd # '#f00'
+  grd.addColorStop(0, "red")
+  grd.addColorStop(0.5, "yellow")
+  grd.addColorStop(1, "green")
+  context.fillStyle = grd # "#f00"
 
-  # context.fillStyle = '#ed0000'
+  # context.fillStyle = "#ed0000"
   context.beginPath()
   context.moveTo(x, canvas.height-y)
   context.lineTo(x2, canvas.height-y2)

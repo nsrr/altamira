@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'altamira/models/scored_event'
-require 'xmlsimple'
+require "altamira/models/scored_event"
+require "xmlsimple"
 
 module Altamira
   # Represents a set of Annotation of an EDF, including sleep stages, epoch
@@ -20,22 +20,22 @@ module Altamira
     private
 
     def parse_epoch_length
-      @xml['EpochLength'][0].to_i
+      @xml["EpochLength"][0].to_i
     end
 
     def parse_sleep_stages
-      (@xml['SleepStages'][0]['SleepStage'] || []).collect(&:to_i)
+      (@xml["SleepStages"][0]["SleepStage"] || []).collect(&:to_i)
     end
 
     def parse_scored_events
-      (@xml['ScoredEvents'][0]['ScoredEvent'] || []).collect do |hash|
+      (@xml["ScoredEvents"][0]["ScoredEvent"] || []).collect do |hash|
         hash = {
-          name: extract(hash, 'Name'),
-          lowest_spo2: extract(hash, 'LowestSpO2', convert: :to_f),
-          desaturation: extract(hash, 'Desaturation', convert: :to_f),
-          start: extract(hash, 'Start', convert: :to_f),
-          duration: extract(hash, 'Duration', convert: :to_f),
-          input: extract(hash, 'Input')
+          name: extract(hash, "Name"),
+          lowest_spo2: extract(hash, "LowestSpO2", convert: :to_f),
+          desaturation: extract(hash, "Desaturation", convert: :to_f),
+          start: extract(hash, "Start", convert: :to_f),
+          duration: extract(hash, "Duration", convert: :to_f),
+          input: extract(hash, "Input")
         }
         scored_event = Altamira::ScoredEvent.new(hash)
         scored_event.set_stage(@sleep_stages, @epoch_length)

@@ -8,30 +8,25 @@
 @ready = ->
   window.$canvas = $("#myCanvas")[0]
   window.$ctx = window.$canvas.getContext("2d") if window.$canvas
-  window.$signal_height = $("#myCanvas").data('signal-height')
-  window.$signal_padding = $("#myCanvas").data('signal-padding')
+  window.$signal_height = $("#myCanvas").data("signal-height")
+  window.$signal_padding = $("#myCanvas").data("signal-padding")
 
   start = new Date().getTime()
 
-  if $("[data-object='hypnogram-data']").length > 0
+  if $("[data-object=hypnogram-data]").length > 0
     setupHypnogram()
     drawHypnogram()
 
-  $("[data-object='signal-data']").each( (index) ->
-    drawSignal($(this).data('array'),100,window.$canvas.height-(window.$signal_padding + (window.$signal_height / 2) + index*(window.$signal_height+window.$signal_padding)),$(this).data('label'),parseInt($(this).data('samples-per-data-record')),$(this))
-    $(this).removeAttr('data-array')
+  $("[data-object=signal-data]").each( (index) ->
+    drawSignal($(this).data("array"),100,window.$canvas.height-(window.$signal_padding + (window.$signal_height / 2) + index*(window.$signal_height+window.$signal_padding)),$(this).data("label"),parseInt($(this).data("samples-per-data-record")),$(this))
+    $(this).removeAttr("data-array")
   )
 
   end = new Date().getTime()
   time = end - start
-  $("#drawing-time").html('&middot; Browser: ' + time + ' ms')
+  $("#drawing-time").html("&middot; Browser: #{time} ms")
 
-  # window.$canvas.addEventListener('mouseup', (evt) ->
-  #   mousePos = getMousePos(evt)
-  #   point(mousePos.x, mousePos.y)
-  # , false)
-
-$(document).on('turbolinks:load', ->
+$(document).on("turbolinks:load", ->
   ready()
   window.scrollTo(window.$prevPageXOffset, window.$prevPageYOffset)
   window.$prevPageYOffset = window.pageYOffset
