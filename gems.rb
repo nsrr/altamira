@@ -11,7 +11,7 @@ gem "rexml",             "~> 3.2.5"
 
 gem "coffee-script"
 gem "sprockets",         "~> 4.0.2"
-gem "turbolinks-source", "~> 5.0.0"
+gem "turbolinks-source", "~> 5.2.0"
 
 # Testing
 group :test do

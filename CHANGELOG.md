@@ -6,6 +6,7 @@
   - Update to rake 13.0.3
   - Update to simplecov 0.21.2
   - Update to sprockets 4.0.2
+  - Update to turbolinks-source 5.2.0
 
 ## 5.0.0 (April 18, 2021)
 
