@@ -1,5 +1,9 @@
 ## 5.0.1
 
+### Enhancements
+- **Gem Changes**
+  - Update to rack 2.2.3
+
 ## 5.0.0 (April 18, 2021)
 
 ### Enhancements

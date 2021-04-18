@@ -4,7 +4,7 @@
 source "https://rubygems.org"
 
 gem "edfize",            "~> 0.6.0"
-gem "rack",              "~> 2.0.1"
+gem "rack",              "~> 2.2.3"
 gem "rake",              "~> 12.0.0"
 gem "xml-simple",        "~> 1.1.8"
 gem "rexml",             "~> 3.2.5"
