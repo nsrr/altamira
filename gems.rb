@@ -16,6 +16,6 @@ gem "turbolinks-source", "~> 5.0.0"
 # Testing
 group :test do
   gem "minitest"
-  gem "simplecov",       "~> 0.16.1", require: false
+  gem "simplecov",       "~> 0.21.2", require: false
 end
 # rubocop:enable Layout/ExtraSpacing
