@@ -10,7 +10,7 @@ gem "xml-simple",        "~> 1.1.8"
 gem "rexml",             "~> 3.2.5"
 
 gem "coffee-script"
-gem "sprockets",         "~> 3.7.0"
+gem "sprockets",         "~> 4.0.2"
 gem "turbolinks-source", "~> 5.0.0"
 
 # Testing

@@ -5,6 +5,7 @@
   - Update to rack 2.2.3
   - Update to rake 13.0.3
   - Update to simplecov 0.21.2
+  - Update to sprockets 4.0.2
 
 ## 5.0.0 (April 18, 2021)
 
