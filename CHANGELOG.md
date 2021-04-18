@@ -1,4 +1,4 @@
-## 5.0.1
+## 5.0.1 (April 18, 2021)
 
 ### Enhancements
 - **Gem Changes**
